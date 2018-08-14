@@ -2,6 +2,7 @@ package br.pucminas.api.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -34,7 +36,7 @@ public class Resultado implements Serializable {
 		this.id = id;
 	}
 
-	@OneToMany(mappedBy = "resultado", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Column(name = "id_aluno", nullable = false)
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -43,7 +45,7 @@ public class Resultado implements Serializable {
 		this.aluno = aluno;
 	}
 
-	@OneToMany(mappedBy = "resultado", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Column(name = "id_materia", nullable = false)
 	public Materia getMateria() {
 		return materia;
 	}

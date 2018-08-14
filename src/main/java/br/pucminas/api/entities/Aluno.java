@@ -15,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.NaturalId;
 
@@ -85,7 +83,6 @@ public class Aluno implements Serializable {
 		this.cpf = cpf;
 	}
 
-	@Temporal(TemporalType.DATE)
 	@Column( name = "dta_nascimento", nullable = false)
 	public Date getDtaNascimento() {
 		return dtaNascimento;

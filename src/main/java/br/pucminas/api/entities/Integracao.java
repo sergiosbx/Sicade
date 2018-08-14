@@ -3,6 +3,7 @@ package br.pucminas.api.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -23,7 +25,7 @@ public class Integracao implements Serializable {
 	private static final long serialVersionUID = 6309845788527232032L;
 
 	private Long id;
-	private Resultado resultado;
+	private Set<Resultado> resultado;
 	private Date dtaIntegracao;
 
 	@Id
@@ -36,12 +38,13 @@ public class Integracao implements Serializable {
 		this.id = id;
 	}
 
-	@OneToMany(mappedBy = "integracao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	public Resultado getResultado() {
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_resultado")
+	public Set<Resultado> getResultado() {
 		return resultado;
 	}
 
-	public void setResultado(Resultado resultado) {
+	public void setResultado(Set<Resultado> resultado) {
 		this.resultado = resultado;
 	}
 

@@ -15,8 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "curso")
@@ -73,7 +71,6 @@ public class Curso implements Serializable {
 		this.segmento = segmento;
 	}
 
-	@Temporal(TemporalType.DATE)
 	@Column( name = "dta_inicio", nullable = false )
 	public Date getDtaInicio() {
 		return dtaInicio;
@@ -83,7 +80,6 @@ public class Curso implements Serializable {
 		this.dtaInicio = dtaInicio;
 	}
 
-	@Temporal(TemporalType.DATE)
 	@Column( name = "dta_fim", nullable = false )
 	public Date getDtaFim() {
 		return dtaFim;
