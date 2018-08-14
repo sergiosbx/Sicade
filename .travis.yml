@@ -7,6 +7,6 @@ before_install:
   - chmod +x mvnw
 before_script:
   - psql -c 'DROP DATABASE IF EXISTS sicade;' -U postgres
-  - psql -c 'CREATE DATABASE IF NOT EXISTS sicade;' -U postgres
+  - psql -c 'CREATE DATABASE sicade;' -U postgres
 after_success:
   - bash <(curl -s https://codecov.io/bash)
