@@ -5,5 +5,8 @@ services:
   - postgres
 before_install:
   - chmod +x mvnw
+before_script:
+  - postgres -e 'DROP DATABASE IF EXISTS sicade'
+  - postgres -e 'CREATE DATABASE IF NOT EXISTS sicade'
 after_success:
   - bash <(curl -s https://codecov.io/bash)
