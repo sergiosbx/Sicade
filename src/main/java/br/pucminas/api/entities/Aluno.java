@@ -8,12 +8,12 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
@@ -30,7 +30,7 @@ public class Aluno implements Serializable {
 	private Date dtaNascimento;
 	private String endereco;
 	private Set<Curso> cursos = new HashSet<>();
-	private Set<Materia> materias = new HashSet<>();
+	private Set<Resultado> resultados = new HashSet<>();
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.AUTO )
@@ -51,17 +51,13 @@ public class Aluno implements Serializable {
 		this.cursos = cursos;
 	}
 	
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "resultado",
-		joinColumns =  @JoinColumn(name = "id_aluno"),
-		inverseJoinColumns =  @JoinColumn(name = "id_materia")
-	)
-	public Set<Materia> getMaterias() {
-		return materias;
+	@OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public Set<Resultado> getResultados() {
+		return resultados;
 	}
 
-	public void setMaterias(Set<Materia> materias) {
-		this.materias = materias;
+	public void setResultados(Set<Resultado> resultados) {
+		this.resultados = resultados;
 	}
 
 	@NaturalId

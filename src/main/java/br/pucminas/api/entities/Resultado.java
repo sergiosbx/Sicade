@@ -2,17 +2,14 @@ package br.pucminas.api.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +19,8 @@ public class Resultado implements Serializable {
 	private static final long serialVersionUID = -713545263599116642L;
 
 	private Long id;
+	private String materia;
 	private Aluno aluno;
-	private Materia materia;
 	private BigDecimal nota;
 
 	@Id
@@ -36,7 +33,7 @@ public class Resultado implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "id_aluno", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
 	public Aluno getAluno() {
 		return aluno;
 	}
@@ -45,12 +42,11 @@ public class Resultado implements Serializable {
 		this.aluno = aluno;
 	}
 
-	@Column(name = "id_materia", nullable = false)
-	public Materia getMateria() {
+	public String getMateria() {
 		return materia;
 	}
 
-	public void setMateria(Materia materia) {
+	public void setMateria(String materia) {
 		this.materia = materia;
 	}
 
