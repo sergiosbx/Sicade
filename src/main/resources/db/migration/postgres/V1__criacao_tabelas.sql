@@ -3,8 +3,7 @@ CREATE TABLE IF NOT EXISTS curso (
 	id SERIAL PRIMARY KEY,
 	descricao VARCHAR(100) NOT NULL,
 	segmento VARCHAR(50) NOT NULL,
-	dta_inicio DATE NOT NULL,
-	dta_fim DATE NOT NULL	
+	periodo VARCHAR(50) NOT NULL
 );
 
 DROP TABLE IF EXISTS aluno;

@@ -1,7 +1,6 @@
 package br.pucminas.api.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,12 +24,11 @@ public class Curso implements Serializable {
 	private Long id;
 	private String descricao;
 	private String segmento;
-	private Date dtaInicio;
-	private Date dtaFim;
+	private String periodo;
 	private Set<Aluno> alunos = new HashSet<>();
 
 	@Id
-	@GeneratedValue( strategy = GenerationType.AUTO )
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	public Long getId() {
 		return id;
 	}
@@ -71,28 +69,18 @@ public class Curso implements Serializable {
 		this.segmento = segmento;
 	}
 
-	@Column( name = "dta_inicio", nullable = false )
-	public Date getDtaInicio() {
-		return dtaInicio;
+	@Column( name = "periodo", nullable = false )
+	public String getPeriodo() {
+		return periodo;
 	}
 
-	public void setDtaInicio(Date dtaInicio) {
-		this.dtaInicio = dtaInicio;
-	}
-
-	@Column( name = "dta_fim", nullable = false )
-	public Date getDtaFim() {
-		return dtaFim;
-	}
-
-	public void setDtaFim(Date dtaFim) {
-		this.dtaFim = dtaFim;
+	public void setPeriodo(String periodo) {
+		this.periodo = periodo;
 	}
 
 	@Override
 	public String toString() {
-		return "Curso [id=" + id + ", descricao=" + descricao + ", segmento=" + segmento + ", dtaInicio=" + dtaInicio
-				+ ", dtaFim=" + dtaFim + "]";
+		return "Curso [id=" + id + ", descricao=" + descricao + ", segmento=" + segmento + ", periodo=" + periodo + "]";
 	}
-
+	
 }
