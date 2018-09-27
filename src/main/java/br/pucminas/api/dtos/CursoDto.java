@@ -1,7 +1,6 @@
 package br.pucminas.api.dtos;
 
 import java.util.Optional;
-
 import javax.validation.constraints.NotNull;
 
 public class CursoDto {
@@ -10,6 +9,7 @@ public class CursoDto {
 	private String descricao;
 	private String segmento;
 	private String periodo;
+	private Boolean ativo;
 
 	public Optional<Long> getId() {
 		return id;
@@ -37,6 +37,7 @@ public class CursoDto {
 		this.segmento = segmento;
 	}
 
+	@NotNull( message = "Campo obrigatório não informado: Período" )
 	public String getPeriodo() {
 		return periodo;
 	}
@@ -44,10 +45,20 @@ public class CursoDto {
 	public void setPeriodo(String periodo) {
 		this.periodo = periodo;
 	}
-	
+
+	@NotNull( message = "Campo obrigatório não informado: Status" )
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo != null ? ativo : true;
+	}
+
 	@Override
 	public String toString() {
-		return "CursoDto [id=" + id + ", descricao=" + descricao + ", segmento=" + segmento + ", periodo=" + periodo + "]";
+		return "CursoDto [id=" + id + ", descricao=" + descricao + ", segmento=" + segmento + ", periodo=" + periodo
+				+ ", ativo=" + ativo + "]";
 	}
-	
+
 }

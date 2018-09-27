@@ -1,5 +1,85 @@
 <div class="container-fluid">
     <div class="panel panel-primary card">
+        <div class="panel-heading">Cadastro</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-xs-12 col-md-1">
+                    <label for="nome">Id</label>
+                    <input type="text"
+                           class="form-control"
+                           id="id"
+                           ng-model="vm.cadastro.id"
+                           disabled readonly>
+                </div>
+                <div class="form-group col-xs-12 col-md-3">
+                    <label for="nome">Nome</label>
+                    <input type="text"
+                           class="form-control"
+                           id="nome"
+                           ng-model="vm.cadastro.nome"
+                           placeholder="Nome">
+                </div>
+                <div class="form-group col-xs-12 col-md-2">
+                    <label for="cpf">CPF</label>
+                    <input type="text"
+                           class="form-control"
+                           id="cpf"
+                           ng-model="vm.cadastro.cpf"
+                           placeholder="CPF"
+                           clean="true"
+                           mask="999.999.999-99">
+                </div>
+                <div class="form-group col-xs-12 col-md-2">
+                    <label for="dtaNascimento">Data de Nascimento</label>
+                    <input type="text"
+                           class="form-control"
+                           id="dtaNascimento"
+                           ng-model="vm.cadastro.dtaNascimento"
+                           placeholder="Dt. Nascimento"
+                           mask="39/19/9999">
+                </div>
+                <div class="form-group col-xs-12 col-md-4">
+                    <label for="endereco">Endereço</label>
+                    <input type="text"
+                           class="form-control"
+                           id="endereco"
+                           ng-model="vm.cadastro.endereco"
+                           placeholder="Endereço">
+                </div>
+            </div>
+            <div class="row">
+                <!--<div class="form-group col-xs-12 col-md-3" ng-repeat="factory in vm.cursoFactorys track by $index | limitTo: 8">-->
+                <div class="form-group col-xs-12 col-md-3" ng-repeat="pos in [0,1,2,3,4,5,6,7]" ng-if="vm.cadastro.id">
+                    <label for="curso">Curso Módulo - {{$index + 1}}</label>
+                    <select name="curso" class="form-control" ng-model="vm.cadastro.cursos[pos].id" placeholder="Curso">
+                        <option value="" disabled>Selecionar...</option>
+                        <option ng-value="{{curso.id}}" ng-repeat="curso in vm.cursos">{{curso.descricao}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-xs-12 col-md-3" ng-repeat="pos in [0,1,2,3,4,5,6,7]" ng-if="!vm.cadastro.id">
+                    <label for="curso">Curso Módulo - {{$index + 1}}</label>
+                    <select name="curso" class="form-control" ng-model="vm.cadastro.cursos[pos]" placeholder="Curso">
+                        <option value="" disabled>Selecionar...</option>
+                        <option ng-value="{{curso.id}}" ng-repeat="curso in vm.cursos">{{curso.descricao}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="container-fluid">
+                    <button type="submit"
+                            ng-click="vm.salvar(vm.cadastro, vm.recarregar)"
+                            class="btn btn-success"
+                            ng-disabled="vm.desabilitarBtnSalvar()">Salvar</button>
+
+                    <button type="submit"
+                            ng-click="vm.limparCadastro()"
+                            class="btn btn-default">Cancelar</button>
+                    </div>
+            </div>
+        </div>
         <div class="panel-heading">Listagem</div>
         <div class="panel-body">
             <div class="table-responsive">
@@ -14,76 +94,22 @@
                         <td title="'CPF'" filter="{ cpf: 'number'}" sortable="'cpf'">
                             {{aluno.cpf}}
                         </td>
-                        <td title="'Data de Nascimento'" filter="{ dta_nascimento: 'text'}" sortable="'dta_nascimento'">
-                            {{aluno.dta_nascimento}}
+                        <td title="'Data de Nascimento'" filter="{ dtaNascimento: 'text'}" sortable="'dtaNascimento'">
+                            {{aluno.dtaNascimento}}
+                        </td>
+                        <td title="'Status'">
+                            <switch name="onOff"
+                            ng-model="aluno.ativo" on="Ativo" off="Inativo"
+                                    ng-change="vm.atualizarStatus(aluno)"></switch>
+                        </td>
+                        <td title="'Editar'">
+                            <button class="btn btn-info btn-sm"
+                                    ng-click="vm.editar(aluno)">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
                         </td>
                     </tr>
                 </table>
-            </div>
-        </div>
-        <hr>
-        <div class="panel-heading">Cadastro</div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="form-group col-md-1">
-                    <label for="nome">Id</label>
-                    <input type="text"
-                           class="form-control"
-                           id="id"
-                           ng-model="vm.cadastro.id"
-                           disabled readonly>
-                </div>
-                <div class="form-group col-md-8">
-                    <label for="nome">Nome</label>
-                    <input type="text"
-                           class="form-control"
-                           id="nome"
-                           ng-model="vm.cadastro.nome"
-                           placeholder="Nome">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="cpf">CPF</label>
-                    <input type="text"
-                           class="form-control"
-                           id="cpf"
-                           ng-model="vm.cadastro.cpf"
-                           placeholder="CPF">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-3">
-                    <label for="dta_nascimento">Data de Nascimento</label>
-                    <input type="text"
-                           class="form-control"
-                           id="dtaNascimento"
-                           ng-model="vm.cadastro.dtaNascimento"
-                           placeholder="Dt. Nascimento">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="endereco">Endereço</label>
-                    <input type="text"
-                           class="form-control"
-                           id="endereco"
-                           ng-model="vm.cadastro.endereco"
-                           placeholder="Endereço">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="curso">Curso</label>
-                    <input type="text"
-                           class="form-control"
-                           id="curso"
-                           ng-model="vm.cadastro.curso"
-                           placeholder="Curso">
-                </div>
-            </div>
-        </div>
-        <div class="panel-footer">
-            <div class="row">
-                <div class="col-md-3">
-                    <button type="submit"
-                            ng-click="vm.inserir(vm.cadastro)"
-                            class="btn btn-primary">Inserir</button>
-                </div>
             </div>
         </div>
     </div>

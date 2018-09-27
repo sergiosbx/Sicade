@@ -9,8 +9,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "resultado")
@@ -20,8 +26,8 @@ public class Resultado implements Serializable {
 
 	private Long id;
 	private String materia;
-	private Aluno aluno;
 	private BigDecimal nota;
+	private Aluno aluno;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +39,10 @@ public class Resultado implements Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_aluno", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
 	public Aluno getAluno() {
 		return aluno;
 	}

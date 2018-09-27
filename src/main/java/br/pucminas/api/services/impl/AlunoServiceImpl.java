@@ -14,10 +14,20 @@ public class AlunoServiceImpl implements AlunoService {
 
 	@Autowired
 	private AlunoRepository alunoRepository;
-	
+
 	@Override
 	public List<Aluno> listar() {
 		return alunoRepository.findAll();
+	}
+
+	@Override
+	public Aluno inserir(Aluno curso) {
+		return alunoRepository.save(curso);
+	}
+
+	@Override
+	public Aluno atualizar(Aluno curso) {
+		return alunoRepository.save(curso);
 	}
 
 }

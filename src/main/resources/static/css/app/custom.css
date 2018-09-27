@@ -1,4 +1,7 @@
 .card {
   min-height: 90vh;
-  margin-top: 5vh;
+  margin-top: 2vh;
+}
+ul.pagination {
+  margin: 0
 }

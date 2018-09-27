@@ -8,4 +8,6 @@ import br.pucminas.api.entities.Curso;
 @Transactional(readOnly = true)
 public interface CursoRepository extends JpaRepository<Curso, Long>{
 
+	//Page<Curso> findAll(Example<CursoDto> cursoDto, PageRequest pageRequest);
+
 }

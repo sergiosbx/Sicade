@@ -24,5 +24,10 @@ public class CursoServiceImpl implements CursoService {
 	public Curso inserir(Curso curso) {
 		return cursoRepository.save(curso);
 	}
+	
+	@Override
+	public Curso atualizar(Curso curso) {
+		return cursoRepository.save(curso);
+	}
 
 }

@@ -5,7 +5,9 @@ var app = angular.module('ngApp', [
     'demo.services',
     'ui.router',
     'ngTable',
-    'toaster'
+    'toaster',
+    'uiSwitch',
+    'ngMask'
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -56,6 +58,44 @@ app.constant("CONSTANTS", {
         baseUrl: "/api/aluno"
     },
     curso: {
-        baseUrl: "/api/curso"
+        baseUrl: "/api/curso",
+        areasDeConhecimento: {
+            lista: [
+                { cod: 'CIENCIAS_EXATAS_TERRA', descricao: 'Ciências Exatas e da Terra' },
+                { cod: 'CIENCIAS_BIOLOGICAS', descricao: 'Ciências Biológicas' },
+                { cod: 'ENGENHARIA_TECNOLOGIA', descricao: 'Engenharia / Tecnologia' },
+                { cod: 'CIENCIAS_SAUDE', descricao: 'Ciências da Saúde' },
+                { cod: 'CIENCIAS_AGRARIAS', descricao: 'Ciências Agrárias' },
+                { cod: 'CIENCIAS_SOCIAIS', descricao: 'Ciências Sociais' },
+                { cod: 'CIENCIAS_HUMANAS', descricao: 'Ciências Humanas' },
+                { cod: 'CIENCIAS_LINGUISTICA', descricao: 'Lingüística' },
+                { cod: 'LETRAS_ARTES', descricao: 'Letras e Artes' }
+            ],
+            get: function(cod) {
+                return this.lista.filter(function(l) { return l.cod === cod })[0];
+            }
+        }
     }
+});
+
+app.directive('jqdatepicker', function ($filter) {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+         link: function (scope, element, attrs, ngModelCtrl) {
+            element.datepicker({
+                dateFormat: 'dd/mm/yy',
+                onSelect: function (date) {   
+                    var ar=date.split("/");
+                    date=new Date(ar[2]+"-"+ar[1]+"-"+ar[0]);
+                    ngModelCtrl.$setViewValue(date.getTime());            
+                    scope.$apply();
+                }
+            });
+            ngModelCtrl.$formatters.unshift(function(v) {
+            return $filter('date')(v,'dd/MM/yyyy'); 
+            });
+
+        }
+    };
 });

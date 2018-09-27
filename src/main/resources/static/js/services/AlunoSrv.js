@@ -6,6 +6,12 @@ var alunoSrv = function($http, CONSTANTS) {
     return {
         listar: function(params) {
             return $http.get(CONSTANTE_ALUNO.baseUrl, params);
+        },
+        inserir: function(params) {
+            return $http.post(CONSTANTE_ALUNO.baseUrl, params);
+        },
+        atualizar: function(params) {
+            return $http.put(CONSTANTE_ALUNO.baseUrl, params);
         }
     }
 };
