@@ -3,6 +3,7 @@ package br.pucminas.api.controllers;
 import java.net.URI;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,9 +62,12 @@ public class IntegracaoController {
 		List<Resultado> resultados = historicoIntegracao.getIntegracoes()
 				.stream()
 				.map(integracao -> construirResultado(integracao, lastDataBase))
+				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 
-		resultadoService.inserirLote(resultados);
+		if (!resultados.isEmpty()) {
+			resultadoService.inserirLote(resultados);
+		}
 	}
 	
 	private ResultadoDto fromResultado(Resultado resultado) {
@@ -85,6 +89,10 @@ public class IntegracaoController {
 
 	private Resultado construirResultado(Integracao integracao, Date lastDataBase) {
 		Aluno aluno = alunoService.findByCpf(integracao.getCpf());
+
+		if (aluno == null) {
+			return null;
+		}
 
 		Resultado resultado = new Resultado();
 		resultado.setAluno(aluno);
