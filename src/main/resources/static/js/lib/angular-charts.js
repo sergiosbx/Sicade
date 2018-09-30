@@ -135,7 +135,8 @@ angular.module('angularCharts').directive('acChart', [
         if (config.waitForHeightAndWidth) {
           return false;
         }
-        throw new Error('Please set height and width for the chart element');
+        return true;
+        //throw new Error('Please set height and width for the chart element');
       }
       /**
      * Sets height and width of chart area based on legend
