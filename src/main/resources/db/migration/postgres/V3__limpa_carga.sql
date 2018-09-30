@@ -1,4 +1,4 @@
-DELETE FROM curso_aluno;
-DELETE FROM resultado;
-DELETE FROM aluno;
-DELETE FROM curso;
+TRUNCATE TABLE curso_aluno;
+TRUNCATE TABLE resultado;
+TRUNCATE TABLE aluno;
+TRUNCATE TABLE curso;
