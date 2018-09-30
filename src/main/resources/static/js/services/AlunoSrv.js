@@ -5,7 +5,7 @@ var alunoSrv = function($http, CONSTANTS) {
 
     return {
         listar: function(params) {
-            return $http.get(CONSTANTE_ALUNO.baseUrl, params);
+            return $http.get(CONSTANTE_ALUNO.baseUrl, { params: params });
         },
         inserir: function(params) {
             return $http.post(CONSTANTE_ALUNO.baseUrl, params);

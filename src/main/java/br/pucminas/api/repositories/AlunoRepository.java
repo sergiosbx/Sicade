@@ -7,5 +7,7 @@ import br.pucminas.api.entities.Aluno;
 
 @Transactional(readOnly = true)
 public interface AlunoRepository extends JpaRepository<Aluno, Long>{
+	
+	Aluno findByCpf(String cpf);
 
 }

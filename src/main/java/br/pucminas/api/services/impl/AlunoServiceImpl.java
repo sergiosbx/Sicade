@@ -30,4 +30,9 @@ public class AlunoServiceImpl implements AlunoService {
 		return alunoRepository.save(curso);
 	}
 
+	@Override
+	public Aluno findByCpf(String cpf) {
+		return alunoRepository.findByCpf(cpf);
+	}
+
 }

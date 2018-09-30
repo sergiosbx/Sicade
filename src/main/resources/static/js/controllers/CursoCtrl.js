@@ -36,10 +36,11 @@ var cursoCtrl = function(NgTableParams, cursoSrv, toaster, CONSTANTS) {
         configurarStatusPadrao(cadastro);
 
         var metodo = cadastro.id ? 'atualizar' : 'inserir';
-        cursoSrv[metodo](cadastro).then(function() {
+        cursoSrv[metodo](cadastro).then(function(res) {
             if (successCb) {
                 successCb();
             }
+            toaster.pop('success', 'Registro salvo com sucesso');
         }, function(res) {
             toaster.pop('error', "Erro", res.data.erro);
         });

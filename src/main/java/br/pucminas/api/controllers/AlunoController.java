@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.StreamUtils;
@@ -45,10 +43,6 @@ public class AlunoController {
 	@Autowired
 	private CursoRepository cursoRepository;
 	
-	private final ExampleMatcher MATCHER_CONTAINING = ExampleMatcher.matching()
-			.withIgnoreCase()
-			.withStringMatcher(StringMatcher.CONTAINING);
-
 	@GetMapping
 	public Page<Aluno> listar(@RequestParam(required = false) Long id,
 							  @RequestParam(required = false) String nome,
@@ -64,7 +58,7 @@ public class AlunoController {
 				.comDtaNascimento(dtaNascimento)
 				.comEndereco(endereco);
 
-		return alunoRepository.findAll(Example.of(aluno, MATCHER_CONTAINING), pageable);
+		return alunoRepository.findAll(Example.of(aluno, Utils.MATCHER_CONTAINING), pageable);
 	}
 	
 	@PostMapping

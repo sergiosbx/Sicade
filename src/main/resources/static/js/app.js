@@ -1,17 +1,15 @@
 'use strict'
 var app = angular.module('ngApp', [
     'ui.bootstrap',
-    'demo.controllers',
-    'demo.services',
     'ui.router',
     'ngTable',
     'toaster',
     'uiSwitch',
-    'ngMask'
+    'ngMask',
+    'angularCharts'
 ]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
-    //$urlRouterProvider.when('/dashboard', '/dashboard/overview');
     $urlRouterProvider.otherwise('/login');
 
     $stateProvider
@@ -29,7 +27,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/dashboard',
             parent: 'base',
             templateUrl: 'views/pages/dashboard.html',
-            controller: 'DashboardCtrl'
+            controller: 'DashboardCtrl',
+            controllerAs: 'vm'
         })
         .state('curso', {
             url: '/curso',
@@ -49,7 +48,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/integracao',
             parent: 'base',
             templateUrl: 'views/pages/integracao.html',
-            controller: 'IntegracaoCtrl'
+            controller: 'IntegracaoCtrl',
+            controllerAs: 'vm'
         });
 });
 
@@ -75,27 +75,11 @@ app.constant("CONSTANTS", {
                 return this.lista.filter(function(l) { return l.cod === cod })[0];
             }
         }
-    }
-});
-
-app.directive('jqdatepicker', function ($filter) {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-         link: function (scope, element, attrs, ngModelCtrl) {
-            element.datepicker({
-                dateFormat: 'dd/mm/yy',
-                onSelect: function (date) {   
-                    var ar=date.split("/");
-                    date=new Date(ar[2]+"-"+ar[1]+"-"+ar[0]);
-                    ngModelCtrl.$setViewValue(date.getTime());            
-                    scope.$apply();
-                }
-            });
-            ngModelCtrl.$formatters.unshift(function(v) {
-            return $filter('date')(v,'dd/MM/yyyy'); 
-            });
-
-        }
-    };
+    },
+    integracao: {
+        baseUrl: "/api/integracao"
+    },
+    resultado: {
+        baseUrl: "/api/resultado"
+    },
 });

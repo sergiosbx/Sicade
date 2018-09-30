@@ -1,12 +1,9 @@
 package br.pucminas.api.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.pucminas.api.constants.Mensagem;
 import br.pucminas.api.constants.Validador;
 import br.pucminas.api.dtos.CursoDto;
-import br.pucminas.api.entities.Aluno;
 import br.pucminas.api.entities.Curso;
-import br.pucminas.api.repositories.AlunoRepository;
 import br.pucminas.api.repositories.CursoRepository;
 import br.pucminas.api.response.Response;
 import br.pucminas.api.services.CursoService;
+import br.pucminas.api.utils.Utils;
 
 @RestController
 @RequestMapping("/api/curso")
@@ -40,13 +36,6 @@ public class CursoController {
 	@Autowired
 	private CursoRepository cursoRepository;
 	
-	@Autowired
-	private AlunoRepository alunoRepository;
-	
-	private final ExampleMatcher MATCHER_CONTAINING = ExampleMatcher.matching()
-			.withIgnoreCase()
-			.withStringMatcher(StringMatcher.CONTAINING);
-	
 	@PostMapping
 	public ResponseEntity<Response<Curso>> inserir(@RequestBody CursoDto cursoDto) {
 		Response<Curso> response = new Response<Curso>();
@@ -58,10 +47,10 @@ public class CursoController {
 		}
 		
 		try {
+
 			Curso curso = this.fromDto(cursoDto);
-			Optional<Aluno> opAluno = alunoRepository.findById(2L);
-			curso.getAlunos().add(opAluno.get());
 			response.setData(cursoRepository.save(curso));
+
 		} catch (Exception e) {
 			response.setErro(Mensagem.ERRO.SALVAR);
 			return ResponseEntity.badRequest().body(response);
@@ -81,9 +70,10 @@ public class CursoController {
 		}
 		
 		try {
+
 			Curso curso = this.fromDto(cursoDto);
-			
 			response.setData(cursoService.atualizar(curso));
+
 		} catch (Exception e) {
 			response.setErro(Mensagem.ERRO.SALVAR);
 			return ResponseEntity.badRequest().body(response);
@@ -106,7 +96,7 @@ public class CursoController {
 				.comSegmento(segmento)
 				.comPeriodo(periodo);
 
-		return cursoRepository.findAll(Example.of(curso, MATCHER_CONTAINING), pageable);
+		return cursoRepository.findAll(Example.of(curso, Utils.MATCHER_CONTAINING), pageable);
 	}
 	
 	@GetMapping("/todos")

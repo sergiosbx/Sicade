@@ -1,33 +1,25 @@
-package br.pucminas.api.entities;
+package br.pucminas.api.dtos;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Timestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+public class ResultadoDto {
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Integracao {
-
-	private String cpf;
-	private String nome;
+	private String aluno;
 	private String curso;
 	private String instituicao;
 	private String periodo;
 	private BigDecimal resultado;
+	private Date lastDataBase;
+	private Timestamp dtaCriacao;
 
-	public String getCpf() {
-		return cpf;
+	public String getAluno() {
+		return aluno;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setAluno(String aluno) {
+		this.aluno = aluno;
 	}
 
 	public String getCurso() {
@@ -62,9 +54,20 @@ public class Integracao {
 		this.resultado = resultado;
 	}
 
-	@Override
-	public String toString() {
-		return "Integracao [cpf=" + cpf + ", nome=" + nome + ", curso=" + curso + ", instituicao=" + instituicao
-				+ ", periodo=" + periodo + ", resultado=" + resultado + "]";
+	public Date getLastDataBase() {
+		return lastDataBase;
 	}
+
+	public void setLastDataBase(Date lastDataBase) {
+		this.lastDataBase = lastDataBase;
+	}
+
+	public Timestamp getDtaCriacao() {
+		return dtaCriacao;
+	}
+
+	public void setDtaCriacao(Timestamp dtaCriacao) {
+		this.dtaCriacao = dtaCriacao;
+	}
+
 }

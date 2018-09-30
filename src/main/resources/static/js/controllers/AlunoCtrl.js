@@ -8,8 +8,6 @@ var alunoCtrl = function(NgTableParams, alunoSrv, cursoSrv, toaster) {
     vm.desabilitarBtnSalvar = desabilitarBtnSalvar;
     vm.atualizarStatus = atualizarStatus;
 
-    //vm.cursoFactorys = Array(8).fill({id: null});
-    
     limparCadastro();
     carregarCursos();
 
@@ -40,9 +38,9 @@ var alunoCtrl = function(NgTableParams, alunoSrv, cursoSrv, toaster) {
 
         var metodo = !cadastro.id ? 'inserir' : 'atualizar';
 
-        cadastro.cursos.forEach((c) => {
+        cadastro.cursos.forEach((c, idx) => {
             if (typeof c === 'string' && !isNaN(c)) {
-                c = new Object({id: Number(m)});
+                cadastro.cursos[idx] = new Object({id: Number(c)});
             }
         });
 
@@ -50,6 +48,7 @@ var alunoCtrl = function(NgTableParams, alunoSrv, cursoSrv, toaster) {
             if (successCb) {
                 successCb();
             }
+            toaster.pop('success', 'Registro salvo com sucesso');
         }, function(res) {
             toaster.pop('error', "Erro", res.data.erro);
         });
@@ -63,7 +62,7 @@ var alunoCtrl = function(NgTableParams, alunoSrv, cursoSrv, toaster) {
 
     function limparCadastro() {
         vm.cadastro = {
-            cursos: []//Array(8).fill({})
+            cursos: []
         };
     }
 

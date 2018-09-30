@@ -15,11 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.pucminas.api.utils.Utils;
 
@@ -38,7 +39,9 @@ public class Aluno implements Serializable {
 	
 	//@JsonManagedReference
 	private Set<Curso> cursos = new HashSet<>();
-	//private Set<Resultado> resultados = new HashSet<>();
+	
+	@JsonIgnore
+	private Set<Resultado> resultados = new HashSet<>();
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -65,14 +68,14 @@ public class Aluno implements Serializable {
 		this.cursos = cursos;
 	}
 	
-	/*@OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public Set<Resultado> getResultados() {
 		return resultados;
 	}
 
 	public void setResultados(Set<Resultado> resultados) {
 		this.resultados = resultados;
-	}*/
+	}
 
 	@NaturalId
 	@Column( name = "nome", nullable = false)
@@ -84,7 +87,7 @@ public class Aluno implements Serializable {
 		this.nome = nome;
 	}
 
-	@Column( name = "cpf", nullable = false)
+	@Column( name = "cpf", unique = true, nullable = false)
 	public String getCpf() {
 		return cpf;
 	}
