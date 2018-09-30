@@ -9,9 +9,7 @@
 ,(5,2)
 ,(17,3)
 ,(15,3)
-;
-INSERT INTO public.curso_aluno (id_curso,id_aluno) VALUES 
-(14,3)
+,(14,3)
 ,(16,3)
 ,(1,4)
 ,(3,4)
@@ -20,17 +18,12 @@ INSERT INTO public.curso_aluno (id_curso,id_aluno) VALUES
 ,(10,6)
 ,(9,6)
 ,(11,6)
-,(8,6)
-;
-INSERT INTO public.curso_aluno (id_curso,id_aluno) VALUES 
-(4,7)
+,(8,6) 
+,(4,7)
 ,(12,8)
 ,(9,8)
 ,(8,9)
 ,(13,9)
 ,(16,9)
 ,(15,10)
-,(11,10)
-,(17,11)
-,(14,11)
-;
+,(11,10);

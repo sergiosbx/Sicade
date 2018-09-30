@@ -1,4 +1,0 @@
-TRUNCATE TABLE curso_aluno;
-TRUNCATE TABLE resultado;
-TRUNCATE TABLE aluno;
-TRUNCATE TABLE curso;
