@@ -16,12 +16,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('base', {
             abstract: true,
             url: '',
-            templateUrl: 'views/base.html'
+            templateUrl: 'views/base.html',
+            controller: 'BaseCtrl',
         })
         .state('login', {
             url: '/login',
             templateUrl: 'views/pages/login.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
+            controllerAs: 'vm'
         })
         .state('dashboard', {
             url: '/dashboard',
@@ -32,6 +34,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('curso', {
             url: '/curso',
+            data : {
+                role : 'ADMIN'
+            },
             parent: 'base',
             templateUrl: 'views/pages/curso.html',
             controller: 'CursoCtrl',
@@ -39,6 +44,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('aluno', {
             url: '/aluno',
+            data : {
+                role : 'ADMIN'
+            },
             parent: 'base',
             templateUrl: 'views/pages/aluno.html',
             controller: 'AlunoCtrl',
@@ -46,10 +54,18 @@ app.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('integracao', {
             url: '/integracao',
+            data : {
+                role : 'ADMIN'
+            },
             parent: 'base',
             templateUrl: 'views/pages/integracao.html',
             controller: 'IntegracaoCtrl',
             controllerAs: 'vm'
+        })
+        .state('access-denied', {
+            url: '/access-denied',
+            templateUrl: '',
+            controller: ''
         });
 });
 
@@ -82,4 +98,15 @@ app.constant("CONSTANTS", {
     resultado: {
         baseUrl: "/api/resultado"
     },
+});
+
+app.run(function(AuthSrv, $rootScope, $state, toaster) {
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        if (!AuthSrv.user) {
+            if (toState.name != 'login' && toState.name != 'register') {
+                event.preventDefault();
+                $state.go('login');
+            }
+        }
+    });
 });
